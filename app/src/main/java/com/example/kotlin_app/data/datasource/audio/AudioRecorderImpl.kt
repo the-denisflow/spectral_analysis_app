@@ -6,11 +6,9 @@ import android.content.pm.PackageManager
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
-import android.util.Log
 
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.lifecycleScope
-import com.example.kotlin_app.util.core.common.RecordResource
+import com.example.kotlin_app.util.core.common.resource.RecordResource
 import com.example.kotlin_app.util.core.logging.Logger
 
 import kotlinx.coroutines.Dispatchers
