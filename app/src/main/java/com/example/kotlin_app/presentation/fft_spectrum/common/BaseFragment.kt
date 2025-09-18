@@ -19,6 +19,7 @@ import com.example.kotlin_app.util.core.permissions.AudioPermissionRequesterImpl
 import com.example.kotlin_app.data.datasource.audio.AudioRecorder
 import com.example.kotlin_app.data.datasource.audio.AudioRecorderImpl
 import com.example.kotlin_app.presentation.fft_spectrum.viewmodel.FftTransformViewModel
+
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
@@ -41,6 +42,7 @@ class BaseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 fftTransformViewModel.transformedData.collectLatest { arr ->

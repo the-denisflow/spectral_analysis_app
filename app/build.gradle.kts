@@ -15,10 +15,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
-        val FinnhubApiKey ="d27mpphr01qr2iasjjg0d27mpphr01qr2iasjjgg"
-        buildConfigField ("String", "FINNHUB_API_KEY", "\"$FinnhubApiKey\"")
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -78,25 +74,20 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation ("androidx.fragment:fragment-ktx:1.6.2")
 
-    // --- Compose BOM (manages versions of all Compose libs) ---
-    implementation(platform("androidx.compose:compose-bom:2025.01.00")) // use current BOM
+    implementation(platform("androidx.compose:compose-bom:2025.01.00"))
 
-    // Core Compose
-    implementation("androidx.activity:activity-compose")          // Activity + Compose interop
+    implementation("androidx.activity:activity-compose")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")        // or material (M2) if you prefer
+    implementation("androidx.compose.material3:material3")
 
-    // Lifecycle / Navigation / Hilt interop (optional but handy)
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.0")
     implementation("androidx.navigation:navigation-compose:2.8.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
-    // Debug tooling
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    // UI tests (optional)
     androidTestImplementation(platform("androidx.compose:compose-bom:2025.01.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 
@@ -110,4 +101,6 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+
+    implementation("com.github.wendykierp:JTransforms:3.1")
 }
