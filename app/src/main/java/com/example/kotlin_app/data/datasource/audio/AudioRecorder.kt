@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface AudioRecorder {
     fun startRecording(activityContext: Context): Flow<RecordResource>
+    fun stopRecording()
 }

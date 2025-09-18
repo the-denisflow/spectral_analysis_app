@@ -12,6 +12,7 @@ import com.example.kotlin_app.util.core.common.resource.RecordResource
 import com.example.kotlin_app.util.core.logging.Logger
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,7 +22,6 @@ import kotlin.coroutines.coroutineContext
 
 class AudioRecorderImpl (
     private val logger: Logger,
-
 ) : AudioRecorder {
     private var recorder: AudioRecord? = null
 
@@ -56,12 +56,18 @@ class AudioRecorderImpl (
       return flow {
           val buf = ShortArray(sampleSize)
           while (coroutineContext.isActive && recorder?.recordingState == AudioRecord.RECORDSTATE_RECORDING) {
-              val n = recorder?.read(buf, 0, buf.size) ?: 0
+              recorder?.read(buf, 0, buf.size) ?: 0
               emit(RecordResource.Success(data = buf))
               logger.info("current Amplitude ${buf.last()}")
               delay(uiDelay)
           }
       }.flowOn(Dispatchers.IO)
+    }
+
+    override fun stopRecording() {
+        recorder?.stop()
+        recorder?.release()
+        recorder = null
     }
 
     companion object {

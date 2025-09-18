@@ -36,4 +36,8 @@ class FftTransformViewModel @Inject constructor(private val micBufferRepository:
             .onEach { _transformedData.value = it }
             .launchIn(viewModelScope)
     }
+
+    fun startRecording() {
+        micBufferRepository.isRecording.value = true
+    }
 }
