@@ -16,7 +16,7 @@ import com.example.kotlin_app.presentation.fft_spectrum.component.AudioRecordVie
 import com.example.kotlin_app.util.core.logging.Logger
 import com.example.kotlin_app.util.core.permissions.AudioPermissionRequester
 import com.example.kotlin_app.util.core.permissions.AudioPermissionRequesterImpl
-import com.example.kotlin_app.presentation.fft_spectrum.viewmodel.FftTransformViewModel
+import com.example.kotlin_app.presentation.fft_spectrum.viewmodel.FftTransformViewModelImpl
 
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -28,7 +28,7 @@ class AudioRecordFragment : Fragment() {
     @Inject
     lateinit var logger: Logger
     private lateinit var audioPermissionRequester: AudioPermissionRequester
-    private val fftTransformViewModel: FftTransformViewModel by viewModels()
+    private val fftTransformViewModel: FftTransformViewModelImpl by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
