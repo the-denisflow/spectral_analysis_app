@@ -4,15 +4,6 @@ import com.example.kotlin_app.domain.model.Spectrum
 import org.jtransforms.fft.DoubleFFT_1D
 import kotlin.math.sqrt
 
-/**
- * Generates an array of frequencies in Hz corresponding to the FFT bins
- * for a given sampling rate and number of samples.
- *
- * @param rate The sampling rate in Hz.
- * @param numberOfSamples The number of samples in the signal.
- * @return A [DoubleArray] containing the frequency values from 0 up to half the sampling rate (Nyquist frequency).
- *
- */
 fun computeFFT(input: DoubleArray, samplingRate: Double): Spectrum {
     val n = input.size
     require(n > 1 && n % 128 == 0) { "Input size must be a power of 128" }
