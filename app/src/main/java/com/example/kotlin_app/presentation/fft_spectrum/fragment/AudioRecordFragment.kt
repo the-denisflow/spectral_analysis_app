@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.kotlin_app.presentation.fft_spectrum.component.AudioRecordView
@@ -40,20 +42,15 @@ class AudioRecordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                fftTransformViewModel.transformedData.collectLatest { arr ->
-                    logger.info("micData: ${arr.contentToString()}")
-                }
-            }
-        }
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(
                 ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
             )
             setContent {
-                AudioRecordView(onClickListener = { fftTransformViewModel.startRecording() })
+                val state by fftTransformViewModel.uiState.collectAsStateWithLifecycle()
+                AudioRecordView(
+                    frequencyState = state,
+                    onClickListener = fftTransformViewModel::toggleRecordingState)
             }
         }
     }

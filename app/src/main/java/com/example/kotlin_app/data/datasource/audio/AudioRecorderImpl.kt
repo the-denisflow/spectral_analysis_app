@@ -6,19 +6,17 @@ import android.content.pm.PackageManager
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
-
 import androidx.core.app.ActivityCompat
 import com.example.kotlin_app.util.core.common.resource.RecordResource
 import com.example.kotlin_app.util.core.logging.Logger
-
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
-import kotlin.coroutines.coroutineContext
+import kotlin.time.Duration.Companion.milliseconds
 
 class AudioRecorderImpl (
     private val logger: Logger,
@@ -55,11 +53,11 @@ class AudioRecorderImpl (
 
       return flow {
           val buf = ShortArray(sampleSize)
-          while (coroutineContext.isActive && recorder?.recordingState == AudioRecord.RECORDSTATE_RECORDING) {
+          while (currentCoroutineContext().isActive && recorder?.recordingState == AudioRecord.RECORDSTATE_RECORDING) {
               recorder?.read(buf, 0, buf.size) ?: 0
               emit(RecordResource.Success(data = buf))
               logger.info("current Amplitude ${buf.last()}")
-              delay(uiDelay)
+              delay(uiDelay.milliseconds)
           }
       }.flowOn(Dispatchers.IO)
     }
